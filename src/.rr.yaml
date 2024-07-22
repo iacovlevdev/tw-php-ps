@@ -1,0 +1,27 @@
+version: '3'
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php worker.php"
+  relay: pipes
+
+http:
+  address: 0.0.0.0:8080
+  fcgi:
+    address: tcp://0.0.0.0:9000
+  pool:
+    num_workers: 10
+
+logs:
+  encoding: json
+  level: error
+  mode: production
+
+grpc:
+  listen: tcp://0.0.0.0:8000
+  proto:
+    - "vendor/webteam-srl/test-protobuf/Schema/cosmic-modules.proto"
+  pool:
+    num_workers: 10

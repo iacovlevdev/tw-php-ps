@@ -1,0 +1,24 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "spiral/roadrunner-http": "^3.0",
+        "spiral/goridge": "^4.0",
+        "nyholm/psr7": "^1.8",
+        "spiral/roadrunner-grpc": "^3.3",
+        "ext-openssl": "*",
+        "guzzlehttp/guzzle": "^7.8",
+        "webteam-srl/test-protobuf": "dev-main"
+    },
+    "repositories": {
+        "test-protobuf": {
+            "type": "vcs",
+            "url": "https://github.com/webteam-srl/test-protobuf"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "WebTeam\\Demo\\CosmicSystems\\": "."
+        }
+    }
+}
