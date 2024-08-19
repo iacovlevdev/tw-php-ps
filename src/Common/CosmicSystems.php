@@ -25,6 +25,7 @@ class CosmicSystems implements CosmicSystemsInterface
     {
         $config = $this->factory->getConfiguration($request->getProvider());
         $className = $config->commands()[$name];
+
         return new $className($config, $request, $context);
     }
 }

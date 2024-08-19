@@ -2,7 +2,6 @@
 
 namespace WebTeam\Demo\CosmicSystems\Providers\Lyra\Commands;
 
-use Spiral\RoadRunner\GRPC\ContextInterface;
 use WebTeam\Demo\Cosmic\Proto\Status;
 use WebTeam\Demo\Cosmic\Proto\StatusRequest;
 use WebTeam\Demo\Cosmic\Proto\StatusResponse;
@@ -14,8 +13,7 @@ class Inquiry implements CommandInterface
 {
     public function __construct(
         readonly  private LyraConfig       $configuration,
-        readonly  private StatusRequest    $request,
-        readonly  private ContextInterface $context
+        readonly  private StatusRequest    $request
     ) {}
 
     public function execute(): StatusResponse
@@ -33,7 +31,7 @@ class Inquiry implements CommandInterface
             }
         );
         $response->setBattery($result['battery']);
-        return $response;
 
+        return $response;
     }
 }

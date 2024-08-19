@@ -9,4 +9,5 @@ services:
     volumes:
       - ./src:/app
     ports:
-      - "9000:8000"
+      - "8000:8000"
+      - "6001:6001"

@@ -6,6 +6,7 @@ use Spiral\RoadRunner\GRPC\ContextInterface;
 use Spiral\RoadRunner\GRPC\InvokerInterface;
 use Spiral\RoadRunner\GRPC\Method;
 use Spiral\RoadRunner\GRPC\ServiceInterface;
+use Throwable;
 use WebTeam\Demo\Cosmic\Proto\ErrorResponse;
 
 class CosmicInvoker implements InvokerInterface
@@ -18,7 +19,7 @@ class CosmicInvoker implements InvokerInterface
     {
         try {
             return $this->invoker->invoke($service, $method, $ctx, $input);
-        } catch (\Throwable $e) {
+        } catch (Throwable) {
             return (new ErrorResponse())->serializeToString();
         }
     }

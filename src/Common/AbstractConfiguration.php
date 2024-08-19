@@ -5,7 +5,6 @@ namespace WebTeam\Demo\CosmicSystems\Common;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 
-
 abstract class AbstractConfiguration
 {
     public const INQUIRY = 'inquiry';

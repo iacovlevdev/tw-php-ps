@@ -6,55 +6,56 @@ use WebTeam\Demo\Cosmic\Proto\StatusRequest;
 
 class LyraApi
 {
-    const API_URL = 'https://lyra.wtstage.lol/api/v1';
+    private const METHOD_CHARGE = 'Charge';
+    private const METHOD_STATUS = 'Status';
+
+    private const API_URL = 'https://lyra.wtstage.lol/api/v1';
 
     public function __construct(
         readonly private LyraConfig $configuration
-    )
-    {}
+    ) {
+    }
 
     public function status(StatusRequest $request): array
     {
-        $method = 'Status';
         $data = [
             'Username' => 'demo',
             'OrderId' => $request->getRequestId(),
-            'Client' => "desktop",
+            'Client' => 'desktop',
             'Attributes' => null
         ];
 
-        return $this->post($method, $data);
+        return $this->post(self::METHOD_STATUS, $data);
     }
 
     public function charge(): array
     {
-        $method = 'Charge';
         $data = [
             'Username' => 'demo',
-            'Client' => "desktop",
-            'NotificationURL' => "https://gate.wtstage.lol/api/v1/notification",
+            'Client' => 'desktop',
+            'NotificationURL' => 'https://gate.wtstage.lol/api/v1/notification',
             'MessageID' => rand(1, 999999),
         ];
 
-        return $this->post($method, $data);
+        return $this->post(self::METHOD_CHARGE, $data);
     }
 
     public function init(): void
     {
-        $this->configuration->client()->request("GET", self::API_URL . "/init");
+        $this->configuration->client()->request('GET', self::API_URL . '/init');
     }
 
     private function post(string $method, array $data): array
     {
-        $uuid    = $this->configuration->generateUuid();
+        $uuid = $this->configuration->generateUuid();
         $payload = json_encode([
-                                   'method' => $method,
-                                   'params' => [
-                                       'Signature' => $this->configuration->sign($method, $uuid, $data),
-                                       'UUID'      => $uuid,
-                                       'Data'      => $data
-                                   ]
-                               ]);
+            'method' => $method,
+            'params' => [
+               'Signature' => $this->configuration->sign($method, $uuid, $data),
+               'UUID'      => $uuid,
+               'Data'      => $data
+            ]
+        ]);
 
         $response = $this->configuration->client()->post(
             self::API_URL,
@@ -64,7 +65,6 @@ class LyraApi
             ]
         );
 
-        $body = $response->getBody();
-        return json_decode($body, true);
+        return json_decode($response->getBody(), true);
     }
 }
